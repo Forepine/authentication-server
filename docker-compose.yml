@@ -1,0 +1,62 @@
+version: '3.9'
+services:
+  api_auth_tsp:
+    container_name: api_auth_tsp
+    build: api-auth/
+    command: npm run start:dev
+    ports:
+      - '${API_AUTH_PORT}:${APP_PORT}'
+    volumes:
+      - ./api-auth/src/:/usr/src/app/src/:rw
+    environment:
+      - APP_PORT=${APP_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRY=${JWT_EXPIRY}
+      - VALIDATE_URL=${VALIDATE_URL}
+      - CRYPTO_ALGORITHM=${CRYPTO_ALGORITHM}
+      - CRYPTO_KEY=${CRYPTO_KEY}
+      - THROTTLE_TTL=${THROTTLE_TTL}
+      - THROTTLE_LIMIT=${THROTTLE_LIMIT}
+
+  dashboard_auth_tsp:
+    container_name: dashboard_auth_tsp
+    build: 
+      context: dashboard-auth/
+      dockerfile: Dockerfile
+    command: npm run start:dev
+    ports:
+      - '${DASHBOARD_AUTH_PORT}:${APP_PORT}'
+    volumes:
+      - ./dashboard-auth/src/:/usr/src/app/src/:rw
+    environment:
+      - APP_PORT=${APP_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRY=${JWT_EXPIRY}
+      - VALIDATE_URL=${VALIDATE_URL}
+      - CRYPTO_ALGORITHM=${CRYPTO_ALGORITHM}
+      - CRYPTO_KEY=${CRYPTO_KEY}
+      - THROTTLE_TTL=${THROTTLE_TTL}
+      - THROTTLE_LIMIT=${THROTTLE_LIMIT}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - 6379:6379
+
+volumes:
+  pgdata: {}
