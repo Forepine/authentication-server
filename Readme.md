@@ -4,7 +4,7 @@
 
 ### Entities this authentication server is for
 
-- Plutos ONE with the `internal` key set to `true` for all Plutos users and the default role set to `Owner` for the first registered user.
+- MAIN with the `internal` key set to `true` for all Main User users and the default role set to `Owner` for the first registered user.
 - Bank(s) with the default role set to `Master Admin` for the first registered user.
 - Organization(s) either as `Biller` or `Agent Institution` with the default role set to `Super Admin`.
 
@@ -14,12 +14,12 @@
 graph TD
     A[Start] --> B{Entity Type}
     
-    %% Plutos ONE
-    B -->|Plutos ONE| C[Set internal key as true]
+    %% -
+    B -->|MAIN| C[Set internal key as true]
     C --> D[Set role as Owner]
     D --> E[Full access to system]
-    E --> F[Plutos Owner can create users]
-    F --> G[New Plutos user with internal key true, roles & permissions set at creation]
+    E --> F[Main User Owner can create users]
+    F --> G[New Main User user with internal key true, roles & permissions set at creation]
     G --> H[End]
     
     %% Bank
@@ -27,7 +27,7 @@ graph TD
     I --> J[Enter bank details]
     J --> K[Create Bank]
     K --> L[Set role as Master Admin]
-    L --> M[Full access, less than Plutos]
+    L --> M[Full access, less than Main User]
     M --> N[Bank Master Admin can create users]
     N --> O[New Bank user with roles & permissions set at creation]
     O --> P[End]
@@ -89,7 +89,7 @@ graph TD
 
 ### Base URL: `http://localhost:7005/v1`
 
-### Postman Collection URL: <https://plutos-one-tsp-team.postman.co/workspace/Team-Workspace~65cb7d5e-637f-4470-8b06-c91837401dc5/collection/36679509-f1cab2bb-e3b0-4597-a0f5-8dc1c01b8275?action=share&creator=36679509>
+### Postman Collection URL: <https://Main User-one-tsp-team.postman.co/workspace/Team-Workspace~65cb7d5e-637f-4470-8b06-c91837401dc5/collection/36679509-f1cab2bb-e3b0-4597-a0f5-8dc1c01b8275?action=share&creator=36679509>
 
 # Auth
 
@@ -598,7 +598,7 @@ graph TD
 [PATCH] /organizations/credential
 ```
 
-##### Super Admin & Plutos can update an organization's client secret
+##### Super Admin & Main User can update an organization's client secret
 
 [For complete reference click here](http://localhost:7005/api/#/Organizations%20Controller/OrganizationController_updateClientSecret)
 **Response:**
